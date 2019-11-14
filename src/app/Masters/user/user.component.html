@@ -1,0 +1,374 @@
+<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Master</h4>
+                <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height:600px !important;overflow-y: scroll">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>User Master</strong>
+                            </div>
+                            <form [formGroup]="userForm">
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <div class="card">
+                                            <br />
+                                            <div style="padding-left:20px;text-decoration:underline">
+                                                <strong>Personal Information</strong></div>
+                                            <div class="card-body" id="userbody">
+                                                <div class="row">
+                                                    <div class="form-group col-sm-12">
+                                                        <input type="hidden" formControlName="id" id="id">
+                                                        <label for="firstname">Username</label>
+                                                        <div class="input-group">
+
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i
+                                                                        class="fa fa-user"></i></span>
+                                                            </div>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="userName" id="userName"
+                                                                placeholder="Enter username"
+                                                                [ngClass]="{'is-invalid':userForm.controls['userName'].errors && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty)}">
+                                                            <div class="invalid-feedback"
+                                                                *ngIf="userForm.controls['userName'].errors">
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['userName'].errors.required">User
+                                                                        name
+                                                                        is required.</span></div>
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['userName'].errors.maxlength">User
+                                                                        name
+                                                                        should contains at most 12 characters.</span>
+                                                                </div>
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['userName'].errors.pattern">Enter
+                                                                        valid user
+                                                                        name</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="firstname">First Name</label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="firstName" id="firstname"
+                                                            placeholder="Enter first name"
+                                                            [ngClass]="{'is-invalid':userForm.controls['firstName'].errors && (userForm.controls['firstName'].touched || userForm.controls['firstName'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['firstName'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['firstName'].errors.required">First
+                                                                    name
+                                                                    is required.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['firstName'].errors.maxlength">First
+                                                                    name
+                                                                    should contains at most 15 characters.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['firstName'].errors.pattern">Enter
+                                                                    valid
+                                                                    user
+                                                                    name</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="name">Last Name</label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="lastName" id="lastname"
+                                                            placeholder="Enter last name"
+                                                            [ngClass]="{'is-invalid':userForm.controls['lastName'].errors && (userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['lastName'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['lastName'].errors.required">Last
+                                                                    name
+                                                                    is required.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['lastName'].errors.maxlength">Last
+                                                                    name
+                                                                    should contains at most 15 characters.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['lastName'].errors.pattern">Enter
+                                                                    valid
+                                                                    last name</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="email">Email</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i
+                                                                        class="fa fa-envelope"></i></span>
+                                                            </div>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="email" id="email" type="email"
+                                                                placeholder="abc@xyz.com"
+                                                                [ngClass]="{'is-invalid':userForm.controls['email'].errors && (userForm.controls['email'].touched || userForm.controls['email'].dirty)}">
+                                                            <div class="invalid-feedback"
+                                                                *ngIf="userForm.controls['email'].errors">
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['email'].errors.required">email
+                                                                        is required.</span></div>
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['email'].errors.pattern">Enter
+                                                                        valid
+                                                                        email id</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="mobile">Mobile No.</label>
+                                                        <div class="input-group">
+
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i
+                                                                        class="fa fa-mobile"></i></span>
+                                                            </div>
+                                                            <input type="text" class="form-control"
+                                                                formControlName="mobileNo" id="mobileNo"
+                                                                placeholder="Enter Mobile Number"
+                                                                [ngClass]="{'is-invalid':userForm.controls['mobileNo'].errors && (userForm.controls['mobileNo'].touched || userForm.controls['mobileNo'].dirty)}">
+                                                            <div class="invalid-feedback"
+                                                                *ngIf="userForm.controls['mobileNo'].errors">
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['mobileNo'].errors.required">Mobile
+                                                                        number
+                                                                        is required.</span></div>
+                                                                <div><span
+                                                                        *ngIf="userForm.controls['mobileNo'].errors.pattern">Enter
+                                                                        valid mobile number</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="dob">Date Of Birth</label>
+                                                        <div>
+                                                        <p-calendar formControlName="dob" [showIcon]="true" [locale]="en"></p-calendar>
+                                                        </div>
+                                                        <input class="form-control" formControlName="dob"
+                                                            type="date" id="dob" placeholder="Enter date of birth"  value="2013-01-08"
+                                                            [ngClass]="{'is-invalid':userForm.controls['dob'].errors && (userForm.controls['dob'].touched || userForm.controls['dob'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['dob'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['dob'].errors.required">Date
+                                                                    of birth
+                                                                    is required.</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <hr>
+                                                <div style="text-decoration:underline">
+                                                    <strong>Address</strong></div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="area">Area</label>
+                                                        <input type="text" class="form-control" formControlName="area"
+                                                            id="area" placeholder="Enter area name"
+                                                            [ngClass]="{'is-invalid':userForm.controls['area'].errors && (userForm.controls['area'].touched || userForm.controls['area'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['area'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['area'].errors.required">Area
+                                                                    is required.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['area'].errors.maxlength">Area
+                                                                    should contains at most 20 characters.</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="landmark">Landmark</label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="landmark" id="landmark"
+                                                            placeholder="Enter landmark"
+                                                            [ngClass]="{'is-invalid':userForm.controls['landmark'].errors && (userForm.controls['landmark'].touched || userForm.controls['landmark'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['landmark'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['landmark'].errors.required">Landmark
+                                                                    is required.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['landmark'].errors.maxlength">Landmark
+                                                                    should contains at most 20 characters.</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control" formControlName="city"
+                                                            id="city" placeholder="Enter your city"
+                                                            [ngClass]="{'is-invalid':userForm.controls['city'].errors && (userForm.controls['city'].touched || userForm.controls['city'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['city'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['city'].errors.required">City
+                                                                    is required.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['city'].errors.maxlength">City
+                                                                    should contains at most 20 characters.</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-sm-6">
+                                                        <label for="state">State</label>
+                                                        <input type="text" class="form-control" formControlName="state"
+                                                            id="state" placeholder="Enter state name"
+                                                            [ngClass]="{'is-invalid':userForm.controls['state'].errors && (userForm.controls['state'].touched || userForm.controls['state'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['state'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['state'].errors.required">State
+                                                                    is required.</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-8">
+                                                        <label for="country">Country</label>
+                                                        <input type="text" class="form-control" id="country"
+                                                            formControlName="country" placeholder="Enter country name"
+                                                            [ngClass]="{'is-invalid':userForm.controls['country'].errors && (userForm.controls['country'].touched || userForm.controls['country'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['country'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['country'].errors.required">Country
+                                                                    is required.</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-sm-4">
+                                                        <label for="postalcode">Postal Code</label>
+                                                        <input type="text" class="form-control"
+                                                            formControlName="postalCode" id="postalcode"
+                                                            placeholder="Postal Code"
+                                                            [ngClass]="{'is-invalid':userForm.controls['postalCode'].errors && (userForm.controls['postalCode'].touched || userForm.controls['postalCode'].dirty)}">
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="userForm.controls['postalCode'].errors">
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['postalCode'].errors.required">Postal
+                                                                    code
+                                                                    is required.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['postalCode'].errors.maxlength">Postal
+                                                                    code
+                                                                    must be 6 digits number.</span></div>
+                                                            <div><span
+                                                                    *ngIf="userForm.controls['postalCode'].errors.pattern">Enter
+                                                                    valid postal code</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row"></div>
+                                                <!-- <div class="row">
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-block btn-outline-dark"
+                                                            (click)="ResetPage()">Cancel</button>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <button type="button" class="btn btn-block btn-outline-success"
+                                                            (click)="SaveUser()">Submit</button>
+                                                    </div>
+
+
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="primaryModal.hide()">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="ResetPage()">Reset</button>
+                <button type="button" class="btn btn-primary" (click)="SaveUser()">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Users
+                <button type="button" class="btn btn-outline-primary floatright" data-toggle="modal"
+                    (click)="NewUser()"><i class="fa fa-plus"></i>&nbsp;New</button>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile No.</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Edit/ Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of pageOfItems">
+                            <td>{{userList.indexOf(user)+1}}</td>
+                            <td>{{user.firstName+" "+user.lastName}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.mobileNo}}</td>
+                            <td>{{user.displayAddress}}</td>
+                            <td>
+                                <!-- show = {{user.status}} -->
+                                <div *ngIf="user.status">
+                                    <span class="badge badge-success">Active</span>
+                                </div>
+                                <div *ngIf="!user.status">
+                                    <span class="badge badge-secondary">InActive</span>
+                                </div>
+
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn btn-outline-success"><i
+                                        class="fa fa-pencil-square-o" (click)="EditUser(user)"></i></button>
+                                <button type="button" class="btn btn-outline-danger"><i
+                                        class="fa fa-trash-o"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="card-footer pb-0 pt-3">
+                    <jw-pagination [items]="userList" (changePage)="onChangePage($event)"></jw-pagination>
+                </div>
+                <!-- <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--/.col-->

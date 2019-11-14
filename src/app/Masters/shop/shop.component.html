@@ -1,0 +1,296 @@
+<div class="animated fadeIn">
+        <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <i class="fa fa-align-justify"></i> Shop Details
+                      <button type="button" class="btn btn-outline-primary floatright" style="float: right;" (click)="primaryModal.show()"><i class="fa fa-plus"></i>&nbsp;New Shop</button>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                    <tr>
+                                      <th>Sr No</th>
+                                      <th>Name</th>
+                                      <th>Location</th>
+                                      <th>Type</th>
+                                      <th>Contact</th>
+                                      <!-- <th>Address</th> -->
+                                      <th>Status</th>
+                                      <th>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let shop of shops; let i=index">
+                                      <td>{{i+1}}</td>
+                                      <td>{{shop.shopName}}</td>
+                                      <td>{{shop.displayAddress}}</td>
+                                      <td>{{shop.shopCategory}}</td>
+                                      <td>{{shop.mobileNumber}}</td>
+                                      <!-- <td>{{shop.status}}</td> -->
+                                      <td>
+                                        <span class="badge badge-success">Active</span>
+                                      </td>
+                                      <td>
+                                          <button type="button" class="btn btn-primary" (click)="updateShop(shop,i)">Update</button>
+                                      </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>2</td>
+                                        <td>Carwyn Fachtna</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                      <td>
+                                        <span class="badge badge-danger">Banned</span>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Carwyn Fachtna</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                      <td>
+                                        <span class="badge badge-secondary">Inactive</span>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Carwyn Fachtna</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                      <td>
+                                        <span class="badge badge-warning">Pending</span>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Carwyn Fachtna</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                        <td>2012/01/01</td>
+                                        <td>Member</td>
+                                      <td>
+                                        <span class="badge badge-success">Active</span>
+                                      </td>
+                                    </tr> -->
+                                  </tbody>
+                      </table>
+                      <nav>
+                        <ul class="pagination">
+                          <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                          <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item"><a class="page-link" href="#">4</a></li>
+                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                <!--/.col-->
+              </div>
+</div>
+<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-primary modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create Shop</h4>
+        <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="card">
+                  <div class="card-header" (click)="isCollapsed = !isCollapsed">
+                      <strong>Shop Master</strong>
+                  </div>
+                  <form [formGroup]="shopForm">
+                  <div class="card-body"
+                      [collapse]="isCollapsed" id="userbody">
+                      <div class="row">
+                          <div class="form-group col-sm-6">
+                              <label for="name">Name</label>
+                              <input type="text" class="form-control" [ngClass]="{'is-invalid':shopForm.controls['shopName'].errors && shopForm.controls['shopName'].touched}" formControlName="shopName"  placeholder="Enter Product Name">
+                              <div class="invalid-feedback" *ngIf="shopForm.controls['shopName'].errors">
+                                <div><span *ngIf="shopForm.controls['shopName'].errors.required">Product name is required.</span></div>
+                                <div><span *ngIf="shopForm.controls['shopName'].errors.maxlength">Product name should less than 30 characters.</span></div>
+                              </div>
+                          </div>
+                          <div class="form-group col-sm-6 ">
+                              <label for="category">Category</label>
+                              <select id="select1" name="select1" formControlName="category" class="form-control" [ngClass]="{'is-invalid':shopForm.controls['category'].errors && shopForm.controls['category'].touched}">
+                                <option value="null">--Shop Category--</option>
+                                <option value="Mobile Phones">Mobile Phones</option>
+                                <option value="Hardware">Hardware</option>
+                              </select>
+                              <div class="invalid-feedback" *ngIf="shopForm.controls['category'].errors">
+                                <div><span *ngIf="shopForm.controls['category'].errors.required">Please select the product category.</span></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="form-group col-sm-6">
+                              <label for="mobileNumber">Mobile Number</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text"><i
+                                              class="fa fa-mobile"></i></span>
+                                  </div>
+                              <input type="number" class="form-control" [ngClass]="{'is-invalid':shopForm.controls['mobileNumber'].errors && shopForm.controls['mobileNumber'].touched}" formControlName="mobileNumber" placeholder="Enter Mobile Number">
+                              <div class="invalid-feedback" *ngIf="shopForm.controls['mobileNumber'].errors">
+                                <div><span *ngIf="shopForm.controls['mobileNumber'].errors.required">Mobile number is required.</span></div>
+                                <div><span *ngIf="shopForm.controls['mobileNumber'].errors.pattern">Please provide a valid mobile number.</span></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group col-sm-6">
+                            <label for="emailId">Email</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i
+                                            class="fa fa-envelope"></i></span>
+                                </div>
+                                <input type="text" class="form-control"
+                                    formControlName="emailId" id="emailId" type="email"
+                                    placeholder="abc@xyz.com"
+                                    [ngClass]="{'is-invalid':shopForm.controls['emailId'].errors && (shopForm.controls['emailId'].touched || shopForm.controls['emailId'].dirty)}">
+                                <div class="invalid-feedback"
+                                    *ngIf="shopForm.controls['emailId'].errors">
+                                    <div><span
+                                            *ngIf="shopForm.controls['emailId'].errors.required">emailId
+                                            is required.</span></div>
+                                    <div><span
+                                            *ngIf="shopForm.controls['emailId'].errors.pattern">Enter
+                                            valid
+                                            Email id</span></div>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+                      <hr>
+                         <div style="text-decoration:underline">
+                             <strong>Address</strong></div>
+                          <br />
+                          <div class="row">
+                              <div class="form-group col-sm-6">
+                                  <label for="area">Area</label>
+                                  <input type="text" class="form-control" formControlName="area"
+                                      id="area" placeholder="Enter area name"
+                                      [ngClass]="{'is-invalid':shopForm.controls['area'].errors && (shopForm.controls['area'].touched || shopForm.controls['area'].dirty)}">
+                                  <div class="invalid-feedback"
+                                      *ngIf="shopForm.controls['area'].errors">
+                                      <div><span
+                                              *ngIf="shopForm.controls['area'].errors.required">Area
+                                              is required.</span></div>
+                                      <div><span
+                                              *ngIf="shopForm.controls['area'].errors.maxlength">Area
+                                              should contains at most 20 characters.</span></div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                  <label for="landmark">Landmark</label>
+                                  <input type="text" class="form-control"
+                                      formControlName="landmark" id="landmark"
+                                      placeholder="Enter landmark"
+                                      [ngClass]="{'is-invalid':shopForm.controls['landmark'].errors && (shopForm.controls['landmark'].touched || shopForm.controls['landmark'].dirty)}">
+                                  <div class="invalid-feedback"
+                                      *ngIf="shopForm.controls['landmark'].errors">
+                                      <div><span
+                                              *ngIf="shopForm.controls['landmark'].errors.required">Landmark
+                                              is required.</span></div>
+                                      <div><span
+                                              *ngIf="shopForm.controls['landmark'].errors.maxlength">Landmark
+                                              should contains at most 20 characters.</span></div>
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="row">
+                              <div class="form-group col-sm-6">
+                                  <label for="city">City</label>
+                                  <input type="text" class="form-control" formControlName="city"
+                                      id="city" placeholder="Enter your city"
+                                      [ngClass]="{'is-invalid':shopForm.controls['city'].errors && (shopForm.controls['city'].touched || shopForm.controls['city'].dirty)}">
+                                  <div class="invalid-feedback"
+                                      *ngIf="shopForm.controls['city'].errors">
+                                      <div><span
+                                              *ngIf="shopForm.controls['city'].errors.required">City
+                                              is required.</span></div>
+                                      <div><span
+                                              *ngIf="shopForm.controls['city'].errors.maxlength">City
+                                              should contains at most 20 characters.</span></div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                  <label for="state">State</label>
+                                  <input type="text" class="form-control" formControlName="state"
+                                      id="state" placeholder="Enter state name"
+                                      [ngClass]="{'is-invalid':shopForm.controls['state'].errors && (shopForm.controls['state'].touched || shopForm.controls['state'].dirty)}">
+                                  <div class="invalid-feedback"
+                                      *ngIf="shopForm.controls['state'].errors">
+                                      <div><span
+                                              *ngIf="shopForm.controls['state'].errors.required">State
+                                              is required.</span></div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="form-group col-sm-6">
+                                  <label for="country">Country</label>
+                                  <input type="text" class="form-control" id="country"
+                                      formControlName="country" placeholder="Enter country name"
+                                      [ngClass]="{'is-invalid':shopForm.controls['country'].errors && (shopForm.controls['country'].touched || shopForm.controls['country'].dirty)}">
+                                  <div class="invalid-feedback"
+                                      *ngIf="shopForm.controls['country'].errors">
+                                      <div><span
+                                              *ngIf="shopForm.controls['country'].errors.required">Country
+                                              is required.</span></div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                  <label for="postalcode">Postal Code</label>
+                                  <input type="text" class="form-control"
+                                      formControlName="postalCode" id="postalcode"
+                                      placeholder="Postal Code"
+                                      [ngClass]="{'is-invalid':shopForm.controls['postalCode'].errors && (shopForm.controls['postalCode'].touched || shopForm.controls['postalCode'].dirty)}">
+                                  <div class="invalid-feedback"
+                                      *ngIf="shopForm.controls['postalCode'].errors">
+                                      <div><span
+                                              *ngIf="shopForm.controls['postalCode'].errors.required">Postal
+                                              code
+                                              is required.</span></div>
+                                      <div><span
+                                              *ngIf="shopForm.controls['postalCode'].errors.maxlength">Postal
+                                              code
+                                              must be 6 digits number.</span></div>
+                                      <div><span
+                                              *ngIf="shopForm.controls['postalCode'].errors.pattern">Enter
+                                              valid postal code</span></div>
+                                  </div>
+                              </div>
+                          </div>
+                  </div>
+              </form>
+              </div>
+          </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="primaryModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="shopForm.reset()">Reset</button>
+        <button type="button" class="btn btn-primary" [disabled]="!shopForm.valid" (click)="submitShopForm()">Submit</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
