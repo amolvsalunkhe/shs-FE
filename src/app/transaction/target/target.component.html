@@ -2,174 +2,45 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <i class="fa fa-align-justify"></i> HandOver Details
+                <i class="fa fa-align-justify"></i> HandOver Form
             </div>
             <div class="card-body">
-                            <p-table [value]="users" [paginator]="true" [rows]="3">
+                    <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="select1">Select User To Give Handover</label>
+                            <div class="col-md-3">
+                              <select id="selectrole" [(ngModel)]="selecteduser" class="form-control" (change)="ChangingValue($event)"> 
+                                    <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                              </select>
+                            </div>
+                          </div>
+                            <p-table  [value]="tasks" [paginator]="false">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                            <th>Sr. No.</th>
-                                            <th>Name</th>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th>Target</th>
-                                            <th>Action</th>
+                                            <th>Task</th>
+                                            <th>Description</th>
                                     </tr>
                                 </ng-template>
-                                <ng-template pTemplate="body" let-user>
+                                <ng-template pTemplate="body" let-task let-rowIndex="rowIndex">
                                     <tr>
-                                            <td>{{users.indexOf(user)+1}}</td>
-                                            <td>{{user.firstName+" "+user.lastName}}</td>
-                                            <td>{{user.fromDate}}</td>
-                                            <td>{{user.toDate}}</td>
-                                            <td>{{user.target}}</td>                           
-                                            <td>
-                                                <button type="button" class="btn btn-outline-success"><i
-                                                        class="fa fa-pencil-square-o" (click)="EditUser(user)"></i></button>
-                                                <button type="button" class="btn btn-outline-danger"><i
-                                                        class="fa fa-history"></i></button>
+                                            <td *ngIf="task.category==null">{{task.name}}</td>
+                                            <td *ngIf="task.category==null"><input [id]="rowIndex" type="text" (change)="onChange(task,rowIndex,this.value)"></td>
+                                            <td *ngIf="task.category!=null">
+                                              {{task.category.name}}
+                                              <ol>
+                                                <li>{{task.name}}</li>
+                                              </ol>
                                             </td>
+                                            <td *ngIf="task.category!=null">
+                                                <input [id]="rowIndex" type="text" (change)="onChange(task,rowIndex)">
+                                              </td>
                                     </tr>
                                 </ng-template>
                             </p-table>
-             
+                            <div style="margin-top: 5px;">
+                                <button type="button" class="btn btn-primary" style="float:right;margin-right: 80px;" [disabled]="!selecteduser" (click)="submit()">Submit</button>
+                            </div>
         </div>
     </div>
-
 </div>
 </div>
 
-<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-primary modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Set Target</h4>
-              <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                  <div class="col-sm-12">
-                      <div class="card">
-                          <form [formGroup]="userForm">
-                          <div class="card-body"
-                              [collapse]="isCollapsed" id="userbody">
-                               <div class="row">
-                                  <div class="form-group col-sm-6 ">
-                                        <label for="name">Name</label>
-                                        <select id="name" name="name" formControlName="userName" class="form-control" (change)="ChangingValue($event)"> 
-                                                <option value="0">Select</option>
-                                                <option value="1">Vaibhav Ubhare</option>
-                                                <option value="2">Satish Maurya</option>
-                                                <option value="3">Vikas Maurya</option>
-                                        </select>
-                                        <div class="invalid-feedback" *ngIf="userForm.controls['userName'].errors">
-                                          <div><span *ngIf="userForm.controls['userName'].errors.required">Select User.</span></div>
-                                  </div>
-                              </div>
-                              <div class="form-group col-sm-6">
-                                <label for="fromDate">From Date</label>
-                                <div>
-                                <p-calendar formControlName="fromDate" [showIcon]="true" [locale]="en" [maxDate]="userForm.controls['toDate'].value"></p-calendar>
-                                </div>
-                                <div class="invalid-feedback"
-                                    *ngIf="userForm.controls['fromDate'].errors">
-                                    <div><span
-                                            *ngIf="userForm.controls['fromDate'].errors.required">From date
-                                            is required.</span></div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="row">
-                              <div class="form-group col-sm-6">
-                                <label for="toDate">To Date</label>
-                                <div>
-                                <p-calendar formControlName="toDate" [showIcon]="true" [locale]="en" [minDate]="userForm.controls['fromDate'].value"></p-calendar>
-                                </div>
-                                <div class="invalid-feedback"
-                                    *ngIf="userForm.controls['toDate'].errors">
-                                    <div><span
-                                            *ngIf="userForm.controls['toDate'].errors.required">To date
-                                            is required.</span></div>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6">
-                              <label for="target">Target</label>
-                              <input type="text" class="form-control"
-                                                                formControlName="target" id="target"
-                                                                placeholder="Enter Target"
-                                                                [ngClass]="{'is-invalid':userForm.controls['target'].errors && (userForm.controls['target'].touched || userForm.controls['target'].dirty)}">
-                                                            <div class="invalid-feedback"
-                                                                *ngIf="userForm.controls['target'].errors">
-                                                                <div><span
-                                                                        *ngIf="userForm.controls['target'].errors.required">target
-                                                                        is required.</span></div>
-                                                            </div>
-                            </div>
-                            </div>
-                              <!-- <div class="row">
-                                  <div class="form-group col-sm-6">
-                                      <label for="quantity">Quantity</label>
-                                      <input type="number" class="form-control" [ngClass]="{'is-invalid':productForm.controls['quantity'].errors && productForm.controls['quantity'].touched}" formControlName="quantity" placeholder="Enter Quantity">
-                                      <div class="invalid-feedback" *ngIf="productForm.controls['quantity'].errors">
-                                        <div><span *ngIf="productForm.controls['quantity'].errors.required">Please provide a valid information.</span></div>
-                                        <div><span *ngIf="productForm.controls['quantity'].errors.pattern">Please provide a valid information.</span></div>
-                                      </div>
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                    <label for="price">Price</label>
-                                  <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="fa fa-inr"></i></span>
-                                    </div>
-                                    <input type="number" min="0" class="form-control" [ngClass]="{'is-invalid':(productForm.controls['price'].errors && productForm.controls['price'].touched)||(productForm.invalid && isSubmitted)}" formControlName="price" placeholder="Enter Price">
-                                    <div class="invalid-feedback" *ngIf="productForm.controls['price'].errors">
-                                      <div><span *ngIf="productForm.controls['price'].errors">Price is required.</span></div>
-                                      <div><span *ngIf="productForm.controls['price'].errors">Price should be greater than 0.</span></div>
-                                    </div>
-                                  </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="form-group col-sm-6">
-                                      <label for="discount">Max Discount</label>
-                                      <div class="input-group">
-                                        <input type="number" class="form-control" [ngClass]="{'is-invalid':productForm.controls['discount'].errors && productForm.controls['discount'].touched}" formControlName="discount" placeholder="Disount">
-                                        <div class="input-group-append">
-                                          <span class="input-group-text">%</span>
-                                        </div>
-                                        <div class="invalid-feedback" *ngIf="productForm.controls['discount'].errors">
-                                          <div><span *ngIf="productForm.controls['discount'].errors.required">Discount is required.</span></div>
-                                          <div><span *ngIf="productForm.controls['discount'].errors.pattern">Please add discount in between 0% to 99%.</span></div>
-                                        </div>
-                                      </div>
-                                  </div>
-                                  <div class="form-group col-sm-6">
-                                      <label for="gst">GST</label>
-                                      <div class="input-group">
-                                        <input type="number" class="form-control" [ngClass]="{'is-invalid':productForm.controls['gst'].errors && productForm.controls['gst'].touched}" formControlName="gst" placeholder="GST">
-                                        <div class="input-group-append">
-                                          <span class="input-group-text">%</span>
-                                        </div>
-                                        <div class="invalid-feedback" *ngIf="productForm.controls['gst'].errors">
-                                          <div><span *ngIf="productForm.controls['gst'].errors.required">GST is required.</span></div>
-                                          <div><span *ngIf="productForm.controls['gst'].errors.pattern">Please add GST in between 0% to 99%.</span></div>
-                                        </div>
-                                    </div>
-                                  </div>
-                                </div>-->
-                          </div>
-                      </form>
-                      </div>
-                  </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="primaryModal.hide()">Cancel</button>
-              <button type="button" class="btn btn-danger" (click)="reset()">Reset</button>
-              <button type="button" class="btn btn-primary" [disabled]="!userForm.valid" (click)="submit()">Save</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->

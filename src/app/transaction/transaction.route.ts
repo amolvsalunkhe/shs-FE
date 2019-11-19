@@ -13,10 +13,10 @@ const routes: Routes = [
   },
   children: [
       {
-        path:'target',
+        path:'form',
         component:TargetComponent,
         data: {
-          title: 'Target'
+          title: 'Form'
         }
       },
       {

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 // Import Containers
 import { DefaultLayoutComponent } from './containers';
@@ -8,6 +8,9 @@ import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
+import {
+  AuthGuardService as AuthGuard
+} from './Service/auth-guard.service';
 
 export const routes: Routes = [
   {
@@ -52,23 +55,23 @@ export const routes: Routes = [
     children: [
       {
         path: 'base',
-        loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
+        loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule),canActivate: [AuthGuard]
       },
       {
         path: 'master',
-        loadChildren: () => import('./Masters/master.module').then(m => m.MasterModule)
+        loadChildren: () => import('./Masters/master.module').then(m => m.MasterModule),canActivate: [AuthGuard]
       },
       {
         path: 'transaction',
-        loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule)
+        loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule),canActivate: [AuthGuard]
       },
       {
         path: 'buttons',
-        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
+        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule),canActivate: [AuthGuard]
       },
       {
         path: 'charts',
-        loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule)
+        loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule),canActivate: [AuthGuard]
       },
       // {
       //   path: 'dashboard',
@@ -76,11 +79,11 @@ export const routes: Routes = [
       // },
       {
         path: 'icons',
-        loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
+        loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule),canActivate: [AuthGuard]
       },
       {
         path: 'notifications',
-        loadChildren: () => import('./views/notifications/notifications.module').then(m => m.NotificationsModule)
+        loadChildren: () => import('./views/notifications/notifications.module').then(m => m.NotificationsModule),canActivate: [AuthGuard]
       },
       {
         path: 'theme',

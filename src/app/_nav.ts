@@ -66,12 +66,7 @@ export const navItems: NavData[] = [
     children: [
       {
         name: 'HandOver Form',
-        url: '/transaction/target',
-        icon: 'icon-target'
-      },
-      {
-        name: 'HandOver Info',
-        url: '/transaction/handovers',
+        url: '/transaction/form',
         icon: 'icon-target'
       },
       {

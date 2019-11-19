@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit {
   constructor(private genericService: GenericService) {  }
 
   ngOnInit() {
-    this.genericService.get('http://www.mocky.io/v2/5d94553d2f00002b008ff654',{})
+    this.genericService.get('http://www.mocky.io/v2/5d94553d2f00002b008ff654')
     .subscribe(result => {
       console.log(result)
       this.products = result.products;

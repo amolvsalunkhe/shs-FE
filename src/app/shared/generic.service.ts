@@ -17,7 +17,7 @@ export class GenericService {
     this.option = { headers: this.header };
   }
 
-  public get(url: string, param: any): Observable<any>{
+  public get(url: string): Observable<any>{
     return this.http.get<any>(
       url, this.header)
       .pipe(tap(data => {
@@ -32,7 +32,7 @@ export class GenericService {
     this.spinner.show();
     this.getAccessToken();
     return this.http.post<any>(
-      url, param, this.setHeaders())
+      url, param, this.header)
       .pipe(tap(data => {
         this.spinner.hide();
         return data;

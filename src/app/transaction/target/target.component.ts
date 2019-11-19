@@ -13,8 +13,9 @@ import { tap } from 'rxjs/operators';
 })
 export class TargetComponent implements OnInit {
   @ViewChild('primaryModal', { static: false }) public primaryModal: ModalDirective;
-  users: any[];
+  tasks: any[];
   roles:any[];
+  users:any[];
   userForm: FormGroup;
   userTargetModel: UserTargetModel;
   role:RoleModel;
@@ -22,6 +23,9 @@ export class TargetComponent implements OnInit {
   isSubmitted: boolean;
   pageOfItems: Array<any>;
   en:any;
+  selecteduser:any;
+  response:any=[];
+  listobj:any=[]
 
   constructor(private genericService: GenericService) {
     this.userTargetModel = new UserTargetModel();
@@ -41,52 +45,50 @@ export class TargetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getTasks();
+    this.getUsers();
+  }
 
-    this.userForm= new FormGroup({
-      id:new FormControl(null),
-      userName: new FormControl('0', [Validators.required,Validators.maxLength(12),Validators.pattern(this.RegexPatterns.alphaNumericUnderscorePattern)]),
-      fromDate: new FormControl(new Date(), [Validators.required]),
-      toDate: new FormControl(null, [Validators.required]),
-      target: new FormControl(0, [Validators.required,Validators.maxLength(15)]),
-      targetacheived: new FormControl(null)
+  getUsers(){
+    this.genericService.get("/api/user/users").subscribe(res=>{
+      this.users=res.data
     });
-
-    this.roles=this.getRoles();
-    this.users = this.getUsers();
-    console.log(this.users)
   }
 
-  getRoles()
-  {
-    let roles:RoleModel[]=[
-      {id:0,name:"All",active:true},
-      {id:1,name:"TeamLeader",active:true},
-      {id:2,name:"SalesExecutive",active:true}
-    ];
-    return roles;
+  getTasks() {
+    this.genericService.get("/api/task/tasks").subscribe(res=>{
+      this.createResponse(res.data);
+      this.tasks=res.data
+      this.tasks.forEach(ele=>{
+        this.listobj.push({"handOver":{"id":''},"task":{"id":ele.id},"description":''})
+      })
+    });
+  }
+  createResponse(data){
+    //this.response.add({"i"})
+  }
+  ChangingValue(event){
+    console.log("",this.selecteduser);
   }
 
-  getUsers() {
-    let users: UserTargetModel[] = [
-      { id:1,userName:"Vaibhav1",firstName: "Vaibhav", lastName: "Ubhare",fromDate:"13-10-2019",toDate:"13-11-2019",target:"100000",targetAcheived:false },
-      { id:1,userName:"Vikas1",firstName: "Vikas", lastName: "Bind",fromDate:"13-10-2019",toDate:"13-11-2019",target:"200000",targetAcheived:false },
-      { id:1,userName:"Ranjit1",firstName: "Ranjit", lastName: "Patil",fromDate:"13-10-2019",toDate:"13-11-2019",target:"250000",targetAcheived:false },
-      { id:1,userName:"Vishwa1",firstName: "Vishwa", lastName: "Birajdar",fromDate:"13-10-2019",toDate:"13-11-2019",target:"300000",targetAcheived:false },
-      { id:1,userName:"Amit1",firstName: "Amit", lastName: "Maurya",fromDate:"13-10-2019",toDate:"13-11-2019",target:"260000",targetAcheived:false },     
-    ];
-    return users;
+  onChange(task,rowIndex,event){
+    var ele=document.getElementById(rowIndex);
+    this.listobj[rowIndex].description=ele['value'];
   }
-
-
-  ChangingValue(val: any) {
-  alert(val.target.value);
-}
-reset(){
-  this.userForm.reset();
-  this.userForm.patchValue({userName: '0',fromDate:new Date(),toDate:null,target:0});
-}
 submit(){
-  
+  var createdByUser=JSON.parse(localStorage.getItem("shsUser")).id.data;
+  var params={"createdAt":new Date(),"createdByUser":{"id":createdByUser},"receivedByUser":{"id":this.selecteduser}}
+  this.genericService.Post("/api/handover/handovers",params).subscribe(res=>{
+    this.submitMap(res.data.id);
+  });
+}
+submitMap(id){
+  this.listobj.forEach(ele=>{
+    ele['handOver']['id']=id
+  })
+  this.genericService.Post("/api/handovermap/maps",this.listobj).subscribe(res=>{
+    console.log("",res);
+  });
 }
 }
 

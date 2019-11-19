@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { GenericService } from "../../shared/generic.service";
 import { Constants } from "../../shared/constant"
 import { TokenModel } from "../../models/token"
+import { Router, CanActivate } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ import { TokenModel } from "../../models/token"
 export class LoginComponent {
   loginForm:FormGroup;
   token:TokenModel;
-  constructor(private genericService: GenericService){
+  constructor(private genericService: GenericService,private router: Router){
     console.log(Constants.LOGIN_URL)
   }
 
@@ -25,15 +26,12 @@ export class LoginComponent {
   login(){
     if(this.loginForm.valid){
       let loginObj={};
-      loginObj["Username"]=this.loginForm.get("loginId").value;
+      loginObj["name"]=this.loginForm.get("loginId").value;
       loginObj["password"]=this.loginForm.get("password").value;
       console.log(loginObj)
       this.genericService.login(Constants.LOGIN_URL,loginObj).subscribe(data=>{
-        this.token=data.result;
-        console.log(this.token)
-        localStorage.setItem("tokenInfo",JSON.stringify(this.token));
-        console.log(data)
-        console.log(JSON.parse(localStorage.getItem("tokenInfo")))
+        localStorage.setItem("shsUser",JSON.stringify({"id":data}));
+        this.router.navigate(['/transaction/form']);
       })
     }
   }
