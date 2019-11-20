@@ -11,7 +11,7 @@ export class ManagerHandoverViewComponent implements OnInit {
 
   constructor(private genericService: GenericService) { }
   handovers:any=[];
-  tasks:any=[];
+  handtaskMap:any=[];
   @ViewChild('primaryModal', { static: false }) public primaryModal: ModalDirective;
   ngOnInit() {
     this.getHandOvers();
@@ -25,7 +25,7 @@ export class ManagerHandoverViewComponent implements OnInit {
   view(id){
     var params={"id":id};
     this.genericService.get("/api/handovermap/maps/"+id).subscribe(res=>{
-      this.tasks=res.data
+      this.handtaskMap=res.data
       this.primaryModal.show();
     });
   }

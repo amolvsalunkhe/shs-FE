@@ -44,17 +44,18 @@
                                     <i class="fa fa-align-justify"></i> HandOver Form
                                 </div>
                                 <div class="card-body">
-                                                <p-table  [value]="tasks" [paginator]="false">
+                                                <p-table  [value]="handtaskMap" [paginator]="false">
                                                     <ng-template pTemplate="header">
                                                         <tr>
                                                                 <th>Task</th>
                                                                 <th>Description</th>
                                                         </tr>
                                                     </ng-template>
-                                                    <ng-template pTemplate="body" let-task let-rowIndex="rowIndex">
+                                                    <ng-template pTemplate="body" let-map let-rowIndex="rowIndex">
                                                         <tr>
-                                                                <td *ngIf="task.category==null">{{task.name}}</td>
-                                                                <td *ngIf="task.category==null"></td>
+                                                                <td *ngIf="">{{map.task.name}}</td>
+                                                                <td *ngIf="map.Description!=null">{{map.Description}}</td>
+                                                                <td *ngIf="map.Description==null">{{'NA'}}</td>
                                                         </tr>
                                                     </ng-template>
                                                 </p-table>
