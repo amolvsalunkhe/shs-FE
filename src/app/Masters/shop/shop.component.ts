@@ -17,6 +17,7 @@ export class ShopComponent implements OnInit {
   shops: Array<Shop>=[];
   RegexPatterns:RegexPatterns = new RegexPatterns();
   addresModel:AddressModel=new AddressModel();
+  isCollapsed:boolean=false;
   @ViewChild('primaryModal', {static: false}) public primaryModal: ModalDirective;
   constructor() {
    }

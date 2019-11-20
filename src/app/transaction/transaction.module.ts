@@ -7,10 +7,9 @@ import {FormsModule, ReactiveFormsModule, FormArray, Validators} from '@angular/
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {TableModule} from 'primeng/table';
 import {CalendarModule} from 'primeng/calendar';
-import { HandoverViewComponent } from './handover-view/handover-view.component';
 import { ManagerHandoverViewComponent } from './manager-handover-view/manager-handover-view.component';
 @NgModule({
-  declarations: [TargetComponent, HandoverViewComponent, ManagerHandoverViewComponent],
+  declarations: [TargetComponent, ManagerHandoverViewComponent],
   imports: [
     CommonModule,
     TransactionRoutingModule,
